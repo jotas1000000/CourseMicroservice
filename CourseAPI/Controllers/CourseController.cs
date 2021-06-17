@@ -33,6 +33,24 @@ namespace CourseAPI.Controllers
             }
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<CourseModel>> getCourse(int id)
+        {
+            try
+            {
+                var course = await courseService.GetCourseAsync(id);
+                return Ok(course);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<CourseModel>> Post([FromBody] CourseModel course)
         {
@@ -55,5 +73,34 @@ namespace CourseAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<CourseModel>> PutCourse(int id, [FromBody] CourseModel course)
+        {
+            try
+            {
+                return Ok(await courseService.UpdateCourseAsync(id, course));
+            }
+            catch
+            {
+                throw new Exception("Algo salio mal en el proceso");
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<bool>> DeleteCourse(int id)
+        {
+            try
+            {
+                return Ok(await courseService.DeleteCourse(id));
+            }
+            catch
+            {
+                throw new Exception("Not possible to show");
+            }
+         
+        }
+
+
     }
 }

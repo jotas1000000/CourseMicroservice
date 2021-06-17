@@ -10,6 +10,9 @@ namespace CourseAPI.Services
     {
         Task<IEnumerable<CourseModel>> GetAllCourses();
         Task<CourseModel> AddCourseAsync(CourseModel course);
-        string[] getStrings();
+        Task<CourseModel> UpdateCourseAsync(int id, CourseModel course);
+        Task<bool> DeleteCourse(int id);
+        Task<CourseModel> GetCourseAsync(int id);
+
     }
 }
